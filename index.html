@@ -2,41 +2,32 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Calendario de Lanzamientos</title>
 
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
 
 <style>
-
 body{
     margin:0;
+    background:#f1f3f4;
     font-family:Arial,sans-serif;
-    background:#0a2342;
-    color:white;
 }
 
 header{
-    background:#003366;
-    padding:25px;
+    background:#1a73e8;
+    color:white;
+    padding:20px;
     text-align:center;
 }
 
-header h1{
-    margin:0;
-    font-size:2rem;
-}
-
-header p{
-    margin-top:10px;
-}
-
 #calendar{
-    max-width:1000px;
-    margin:25px auto;
+    max-width:1200px;
+    margin:20px auto;
     background:white;
-    border-radius:15px;
+    border-radius:12px;
     padding:15px;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
 }
 
 .fc-toolbar-title{
@@ -45,21 +36,30 @@ header p{
     text-transform:capitalize;
 }
 
+.fc-col-header-cell{
+    background:#f8f9fa;
+    padding:10px 0;
+}
+
+.fc-daygrid-day-number{
+    font-size:18px;
+    font-weight:bold;
+    color:#202124;
+}
+
 .fc-event{
-    background:#ffd700 !important;
+    background:#fbbc04 !important;
     border:none !important;
     color:black !important;
     font-weight:bold;
+    border-radius:5px !important;
 }
 
 #overlay{
     display:none;
     position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,.7);
+    inset:0;
+    background:rgba(0,0,0,.6);
     z-index:999;
 }
 
@@ -70,12 +70,12 @@ header p{
     left:50%;
     transform:translate(-50%,-50%);
     background:white;
-    color:black;
+    width:90%;
+    max-width:350px;
     padding:20px;
-    border-radius:15px;
-    width:320px;
+    border-radius:12px;
     z-index:1000;
-    box-shadow:0 0 20px rgba(0,0,0,.4);
+    box-shadow:0 0 20px rgba(0,0,0,.3);
 }
 
 #popup h2{
@@ -83,17 +83,15 @@ header p{
 }
 
 #popup button{
-    padding:10px 20px;
-    border:none;
-    background:#003366;
+    background:#1a73e8;
     color:white;
-    border-radius:8px;
+    border:none;
+    padding:10px 15px;
+    border-radius:6px;
     cursor:pointer;
 }
-
 </style>
 </head>
-
 <body>
 
 <header>
@@ -115,161 +113,79 @@ header p{
 
 <script>
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function(){
 
-    var calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(
+        document.getElementById('calendar'),
+        {
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+            locale:'es',
 
-        locale: 'es',
+            initialView:'dayGridMonth',
 
-        initialView: 'dayGridMonth',
+            fixedWeekCount:false,
 
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: ''
-        },
-
-        titleFormat: {
-            year: 'numeric',
-            month: 'long'
-        },
-
-        events: [
-
-            {
-                title: 'Lanzamiento',
-                start: '2026-07-01',
-                description: 'Predicción LaLiga 2025-26'
+            headerToolbar:{
+                left:'prev,next today',
+                center:'title',
+                right:''
             },
 
-            {
-                title: 'Lanzamiento',
-                start: '2026-07-10',
-                description: 'Vídeo especial sobre el Teide'
+            titleFormat:{
+                year:'numeric',
+                month:'long'
             },
 
-            {
-                title: 'Lanzamiento',
-                start: '2026-07-15',
-                description: 'Predicción Liga Hypermotion'
+            dayHeaderFormat:{
+                weekday:'long'
+            },
+
+            events:[
+
+                {
+                    title:'Lanzamiento',
+                    start:'2026-07-01',
+                    description:'Predicción LaLiga 2025-26'
+                },
+
+                {
+                    title:'Lanzamiento',
+                    start:'2026-07-10',
+                    description:'Vídeo especial del Teide'
+                },
+
+                {
+                    title:'Lanzamiento',
+                    start:'2026-07-15',
+                    description:'Predicción Liga Hypermotion'
+                }
+
+            ],
+
+            eventClick:function(info){
+
+                document.getElementById('titulo').innerText =
+                    info.event.title;
+
+                document.getElementById('descripcion').innerText =
+                    info.event.extendedProps.description;
+
+                document.getElementById('overlay').style.display='block';
+                document.getElementById('popup').style.display='block';
             }
 
-        ],
-
-        eventClick: function(info){
-
-            document.getElementById("titulo").innerText =
-                info.event.title;
-
-            document.getElementById("descripcion").innerText =
-                info.event.extendedProps.description;
-
-            document.getElementById("popup").style.display = "block";
-            document.getElementById("overlay").style.display = "block";
-        }
-
-    });
+        });
 
     calendar.render();
 
 });
 
 function cerrarPopup(){
-    document.getElementById("popup").style.display = "none";
-    document.getElementById("overlay").style.display = "none";
+    document.getElementById('overlay').style.display='none';
+    document.getElementById('popup').style.display='none';
 }
 
 </script>
 
 </body>
-</html>    border-radius:8px;
-    cursor:pointer;
-}
-
-#overlay{
-    display:none;
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,.7);
-    top:0;
-    left:0;
-    z-index:999;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-    <h1>Diego Pérez Quintero</h1>
-    <p>Calendario de Lanzamientos</p>
-</header>
-
-<div id="calendar"></div>
-
-<div id="overlay"></div>
-
-<div id="popup">
-    <h2 id="titulo"></h2>
-    <p id="descripcion"></p>
-    <button onclick="cerrarPopup()">Cerrar</button>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-
-<script>
-
-document.addEventListener('DOMContentLoaded', function() {
-
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'es',
-
-        events: [
-            {
-                title: 'Lanzamiento',
-                start: '2026-07-01',
-                description: 'Predicción LaLiga 2025-26'
-            },
-            {
-                title: 'Lanzamiento',
-                start: '2026-07-10',
-                description: 'Vídeo especial del Teide'
-            },
-            {
-                title: 'Lanzamiento',
-                start: '2026-07-15',
-                description: 'Predicción Liga Hypermotion'
-            }
-        ],
-
-        eventClick: function(info) {
-
-            document.getElementById("titulo").innerText =
-            info.event.title;
-
-            document.getElementById("descripcion").innerText =
-            info.event.extendedProps.description;
-
-            document.getElementById("popup").style.display = "block";
-            document.getElementById("overlay").style.display = "block";
-        }
-    });
-
-    calendar.render();
-});
-
-function cerrarPopup(){
-    document.getElementById("popup").style.display="none";
-    document.getElementById("overlay").style.display="none";
-}
-
-</script>
-
-</body>
-</html></html>
+</html>
