@@ -2,187 +2,186 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calendario de Lanzamientos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diego Pérez Quintero</title>
 
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
 
 <style>
+
 body{
-    margin:0;
-    background:#f1f3f4;
-    font-family:Arial,sans-serif;
+margin:0;
+font-family:Arial,sans-serif;
+background:#f1f3f4;
 }
 
 header{
-    background:#1a73e8;
-    color:white;
-    padding:20px;
-    text-align:center;
+background:#0b57d0;
+color:white;
+padding:20px;
+text-align:center;
 }
 
 #calendar{
-    max-width:1200px;
-    margin:20px auto;
-    background:white;
-    border-radius:12px;
-    padding:15px;
-    box-shadow:0 2px 10px rgba(0,0,0,.15);
+max-width:1200px;
+margin:20px auto;
+background:white;
+padding:15px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.15);
 }
 
 .fc-toolbar-title{
-    font-size:2rem !important;
-    font-weight:bold;
-    text-transform:capitalize;
-}
-
-.fc-col-header-cell{
-    background:#f8f9fa;
-    padding:10px 0;
-}
-
-.fc-daygrid-day-number{
-    font-size:18px;
-    font-weight:bold;
-    color:#202124;
+font-size:2rem !important;
+font-weight:bold;
+text-transform:capitalize;
 }
 
 .fc-event{
-    background:#fbbc04 !important;
-    border:none !important;
-    color:black !important;
-    font-weight:bold;
-    border-radius:5px !important;
+background:#ffd54f !important;
+border:none !important;
+color:black !important;
+font-weight:bold;
 }
 
-#overlay{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.6);
-    z-index:999;
+#detalle{
+display:none;
+max-width:1000px;
+margin:20px auto;
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.15);
 }
 
-#popup{
-    display:none;
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    background:white;
-    width:90%;
-    max-width:350px;
-    padding:20px;
-    border-radius:12px;
-    z-index:1000;
-    box-shadow:0 0 20px rgba(0,0,0,.3);
+#detalle h1{
+color:#0b57d0;
 }
 
-#popup h2{
-    margin-top:0;
+.boton{
+background:#0b57d0;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:10px;
+cursor:pointer;
+font-size:16px;
 }
 
-#popup button{
-    background:#1a73e8;
-    color:white;
-    border:none;
-    padding:10px 15px;
-    border-radius:6px;
-    cursor:pointer;
+.boton:hover{
+opacity:.9;
 }
+
 </style>
 </head>
+
 <body>
 
 <header>
-    <h1>Diego Pérez Quintero</h1>
-    <p>Calendario de Lanzamientos</p>
+<h1>Diego Pérez Quintero</h1>
+<p>Calendario de Lanzamientos</p>
 </header>
 
 <div id="calendar"></div>
 
-<div id="overlay"></div>
+<div id="detalle">
 
-<div id="popup">
-    <h2 id="titulo"></h2>
-    <p id="descripcion"></p>
-    <button onclick="cerrarPopup()">Cerrar</button>
+<h1 id="tituloDetalle"></h1>
+
+<p id="textoDetalle"></p>
+
+<button class="boton" onclick="volverCalendario()">
+⬅ Volver al calendario
+</button>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 
 <script>
 
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', function() {
 
-    const calendar = new FullCalendar.Calendar(
-        document.getElementById('calendar'),
-        {
+const calendar = new FullCalendar.Calendar(
+document.getElementById('calendar'),
 
-            locale:'es',
+{
+locale:'es',
 
-            initialView:'dayGridMonth',
+initialView:'dayGridMonth',
 
-            fixedWeekCount:false,
+headerToolbar:{
+left:'prev,next today',
+center:'title',
+right:''
+},
 
-            headerToolbar:{
-                left:'prev,next today',
-                center:'title',
-                right:''
-            },
+titleFormat:{
+year:'numeric',
+month:'long'
+},
 
-            titleFormat:{
-                year:'numeric',
-                month:'long'
-            },
+dayHeaderFormat:{
+weekday:'long'
+},
 
-            dayHeaderFormat:{
-                weekday:'long'
-            },
+events:[
 
-            events:[
+{
+title:'Lanzamiento',
+start:'2026-07-01',
+extendedProps:{
+titulo:'Predicción LaLiga 2025-26',
+texto:'Aquí puedes escribir toda la información sobre tu predicción de LaLiga, clasificación final, equipos revelación y decepciones.'
+}
+},
 
-                {
-                    title:'Lanzamiento',
-                    start:'2026-08-08',
-                    description:'Album LaLiga 2025-26'
-                },
+{
+title:'Lanzamiento',
+start:'2026-07-10',
+extendedProps:{
+titulo:'Vídeo Especial del Teide',
+texto:'Aquí puedes poner información sobre tu vídeo del Teide, curiosidades, teorías o próximos proyectos.'
+}
+},
 
-                {
-                    title:'Lanzamiento',
-                    start:'2026-07-10',
-                    description:'Vídeo especial del Teide'
-                },
+{
+title:'Lanzamiento',
+start:'2026-07-15',
+extendedProps:{
+titulo:'Predicción Liga Hypermotion',
+texto:'Aquí puedes explicar tus predicciones para la Liga Hypermotion y los posibles ascensos.'
+}
+}
 
-                {
-                    title:'Lanzamiento',
-                    start:'2026-07-15',
-                    description:'Predicción Liga Hypermotion'
-                }
+],
 
-            ],
+eventClick:function(info){
 
-            eventClick:function(info){
+document.getElementById('calendar').style.display='none';
 
-                document.getElementById('titulo').innerText =
-                    info.event.title;
+document.getElementById('detalle').style.display='block';
 
-                document.getElementById('descripcion').innerText =
-                    info.event.extendedProps.description;
+document.getElementById('tituloDetalle').innerText =
+info.event.extendedProps.titulo;
 
-                document.getElementById('overlay').style.display='block';
-                document.getElementById('popup').style.display='block';
-            }
+document.getElementById('textoDetalle').innerText =
+info.event.extendedProps.texto;
 
-        });
-
-    calendar.render();
+}
 
 });
 
-function cerrarPopup(){
-    document.getElementById('overlay').style.display='none';
-    document.getElementById('popup').style.display='none';
+calendar.render();
+
+});
+
+function volverCalendario(){
+
+document.getElementById('detalle').style.display='none';
+
+document.getElementById('calendar').style.display='block';
+
 }
 
 </script>
