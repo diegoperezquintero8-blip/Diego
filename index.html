@@ -9,6 +9,10 @@
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
 body{
 margin:0;
 font-family:Arial,sans-serif;
@@ -18,8 +22,35 @@ background:#f1f3f4;
 header{
 background:#0b57d0;
 color:white;
-padding:20px;
 text-align:center;
+padding:20px;
+}
+
+nav{
+background:#003366;
+padding:15px;
+text-align:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin:0 10px;
+font-weight:bold;
+font-size:16px;
+}
+
+nav a:hover{
+color:#ffd700;
+}
+
+.seccion{
+max-width:1200px;
+margin:20px auto;
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 10px rgba(0,0,0,.15);
 }
 
 #calendar{
@@ -28,12 +59,11 @@ margin:20px auto;
 background:white;
 padding:15px;
 border-radius:15px;
-box-shadow:0 0 15px rgba(0,0,0,.15);
+box-shadow:0 0 10px rgba(0,0,0,.15);
 }
 
 .fc-toolbar-title{
 font-size:2rem !important;
-font-weight:bold;
 text-transform:capitalize;
 }
 
@@ -46,16 +76,6 @@ font-weight:bold;
 
 #detalle{
 display:none;
-max-width:1000px;
-margin:20px auto;
-background:white;
-padding:25px;
-border-radius:15px;
-box-shadow:0 0 15px rgba(0,0,0,.15);
-}
-
-#detalle h1{
-color:#0b57d0;
 }
 
 .boton{
@@ -65,7 +85,6 @@ border:none;
 padding:12px 20px;
 border-radius:10px;
 cursor:pointer;
-font-size:16px;
 }
 
 .boton:hover{
@@ -79,20 +98,71 @@ opacity:.9;
 
 <header>
 <h1>Diego Pérez Quintero</h1>
-<p>Calendario de Lanzamientos</p>
+<p>Web Oficial</p>
 </header>
 
-<div id="calendar"></div>
+<nav>
+<a href="#" onclick="mostrarInicio()">🏠 Inicio</a>
+<a href="#" onclick="mostrarCalendario()">📅 Calendario</a>
+<a href="#" onclick="mostrarVideos()">🎥 Vídeos</a>
+<a href="#" onclick="mostrarTenerife()">⚽ Tenerife</a>
+<a href="#" onclick="mostrarSobreMi()">ℹ️ Sobre mí</a>
+</nav>
 
-<div id="detalle">
+<div id="inicio" class="seccion">
+<h2>Bienvenido</h2>
+<p>Bienvenido a mi web oficial.</p>
+<p>Aquí encontrarás mis vídeos, lanzamientos y contenido sobre fútbol y Tenerife.</p>
+</div>
 
+<div id="calendar" style="display:none;"></div>
+
+<div id="detalle" class="seccion">
 <h1 id="tituloDetalle"></h1>
-
 <p id="textoDetalle"></p>
 
 <button class="boton" onclick="volverCalendario()">
 ⬅ Volver al calendario
 </button>
+</div>
+
+<div id="videos" class="seccion" style="display:none;">
+<h2>🎥 Vídeos</h2>
+
+<p>Aquí puedes poner tus vídeos de YouTube.</p>
+
+<iframe width="100%" height="400"
+src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+title="YouTube"
+frameborder="0"
+allowfullscreen>
+</iframe>
+
+</div>
+
+<div id="tenerife" class="seccion" style="display:none;">
+<h2>⚽ CD Tenerife</h2>
+
+<p>
+Noticias, predicciones y análisis del CD Tenerife.
+</p>
+
+</div>
+
+<div id="sobremi" class="seccion" style="display:none;">
+<h2>ℹ️ Sobre mí</h2>
+
+<p>
+Soy Diego Pérez Quintero.
+</p>
+
+<p>
+Profesor y creador de contenido en YouTube.
+</p>
+
+<p>
+¡Gracias por suscribirte!
+</p>
 
 </div>
 
@@ -100,12 +170,72 @@ opacity:.9;
 
 <script>
 
+function ocultarTodo(){
+
+document.getElementById('inicio').style.display='none';
+document.getElementById('calendar').style.display='none';
+document.getElementById('detalle').style.display='none';
+document.getElementById('videos').style.display='none';
+document.getElementById('tenerife').style.display='none';
+document.getElementById('sobremi').style.display='none';
+
+}
+
+function mostrarInicio(){
+
+ocultarTodo();
+
+document.getElementById('inicio').style.display='block';
+
+}
+
+function mostrarCalendario(){
+
+ocultarTodo();
+
+document.getElementById('calendar').style.display='block';
+
+}
+
+function mostrarVideos(){
+
+ocultarTodo();
+
+document.getElementById('videos').style.display='block';
+
+}
+
+function mostrarTenerife(){
+
+ocultarTodo();
+
+document.getElementById('tenerife').style.display='block';
+
+}
+
+function mostrarSobreMi(){
+
+ocultarTodo();
+
+document.getElementById('sobremi').style.display='block';
+
+}
+
+function volverCalendario(){
+
+ocultarTodo();
+
+document.getElementById('calendar').style.display='block';
+
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 
 const calendar = new FullCalendar.Calendar(
 document.getElementById('calendar'),
 
 {
+
 locale:'es',
 
 initialView:'dayGridMonth',
@@ -121,10 +251,6 @@ year:'numeric',
 month:'long'
 },
 
-dayHeaderFormat:{
-weekday:'long'
-},
-
 events:[
 
 {
@@ -132,7 +258,7 @@ title:'Lanzamiento',
 start:'2026-07-01',
 extendedProps:{
 titulo:'Predicción LaLiga 2025-26',
-texto:'Aquí puedes escribir toda la información sobre tu predicción de LaLiga, clasificación final, equipos revelación y decepciones.'
+texto:'Mi predicción completa para la temporada 2025-26.'
 }
 },
 
@@ -140,8 +266,8 @@ texto:'Aquí puedes escribir toda la información sobre tu predicción de LaLiga
 title:'Lanzamiento',
 start:'2026-07-10',
 extendedProps:{
-titulo:'Vídeo Especial del Teide',
-texto:'Aquí puedes poner información sobre tu vídeo del Teide, curiosidades, teorías o próximos proyectos.'
+titulo:'Vídeo del Teide',
+texto:'Nuevo vídeo especial sobre el Teide.'
 }
 },
 
@@ -149,8 +275,8 @@ texto:'Aquí puedes poner información sobre tu vídeo del Teide, curiosidades, 
 title:'Lanzamiento',
 start:'2026-07-15',
 extendedProps:{
-titulo:'Predicción Liga Hypermotion',
-texto:'Aquí puedes explicar tus predicciones para la Liga Hypermotion y los posibles ascensos.'
+titulo:'Liga Hypermotion',
+texto:'Predicción completa de la Liga Hypermotion.'
 }
 }
 
@@ -158,7 +284,7 @@ texto:'Aquí puedes explicar tus predicciones para la Liga Hypermotion y los pos
 
 eventClick:function(info){
 
-document.getElementById('calendar').style.display='none';
+ocultarTodo();
 
 document.getElementById('detalle').style.display='block';
 
@@ -175,14 +301,6 @@ info.event.extendedProps.texto;
 calendar.render();
 
 });
-
-function volverCalendario(){
-
-document.getElementById('detalle').style.display='none';
-
-document.getElementById('calendar').style.display='block';
-
-}
 
 </script>
 
